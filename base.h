@@ -1,3 +1,6 @@
+// Jorge Vazquez
+// Last update: 2024-05-02
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
