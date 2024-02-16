@@ -4,12 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 
-typedef struct Alum
-{
-    char apPat[20];
-    char apMat[20];
+typedef struct Alum{
     char name[20];
+    char especie[20];
+    int edad;
+    char sexo[20];
 } Talum;
 
 typedef struct Nodo
@@ -24,13 +25,39 @@ typedef struct Lista
     int longi; // longitud de la lista
 } Lista;
 
-// Esta funcion crea un nodo con los datos de un alumno y lo retorna
+Nodo *crearNodo(Talum *alum);
+void destruirNodo(Nodo *nodo);
+void insertarPrincipio(Lista *lista, Talum *alum);
+void insertarFinal(Lista *lista, Talum *alum);
+void insertarMedio(int n, Lista *lista, Talum *alum);
+Talum *buscar(int n, Lista *lista);
+int contar(Lista *lista);
+void eliminarInicio(Lista *lista);
+void elimnarUltimo(Lista *lista);
+void elimnarElementos(int n, Lista *lista);
+int validar(char msg[], int ri, int rf);
+
+// Esta funcion crea un nodo con los datos de una mascota y lo retorna
 Nodo *crearNodo(Talum *alum)
 {
+    char cadena[50];
     Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));  // Reservar memoria para el nodo
-    strncpy(nuevo->alum.apPat, alum->apPat, 20); // Copiar el apellido paterno
-    strncpy(nuevo->alum.apMat, alum->apMat, 20);
-    strncpy(nuevo->alum.name, alum->name, 20);
+    
+    fflush(stdin);
+    gets(cadena);
+    strncpy(nuevo->alum.name, cadena, sizeof(cadena)); // Copiar el nombre
+
+    printf("Ingrese la especie de la mascota: ");
+    fflush(stdin);
+    gets(cadena);
+    strncpy(nuevo->alum.especie, cadena, sizeof(cadena));
+    
+    printf("Ingrese el sexo de la mascota: "); 
+    fflush(stdin);
+    gets(cadena);
+    strncpy(nuevo->alum.sexo , cadena, sizeof(cadena)); 
+    
+    nuevo->alum.edad = validar("Ingrese la edad de la mascota: ", 0, 100);
     nuevo->sig = NULL; // El nodo apunta a NULL
     return nuevo;
 }
@@ -45,6 +72,10 @@ void destruirNodo(Nodo *nodo)
 void insertarPrincipio(Lista *lista, Talum *alum)
 {
     Nodo *nuevo = crearNodo(alum);
+    printf("%s", nuevo->alum.name);
+    printf("%s", nuevo->alum.especie); //! ESTOY PROBANDO ESTO
+    printf("%d", nuevo->alum.edad);     //! EL ERROR ES QUE NO PUEDE BUSCAR
+    printf("%s", nuevo->alum.sexo);
     nuevo->sig = lista->ini; // El nuevo nodo apunta al inicio
     lista->ini = nuevo;      // El inicio de la lista es el nuevo nodo
     lista->longi++;          // Aumentar la longitud de la lista
@@ -192,4 +223,20 @@ void elimnarElementos(int n, Lista *lista)
             lista->longi--;
         }
     }
+}
+
+int validar(char msg[], int ri, int rf)
+{
+    char cadena[50];
+    int op;
+
+    do
+    {
+        printf("%s", msg);
+        fflush(stdin);
+        gets(cadena);
+        op = atoi(cadena); //Convierte la cadena a un numero
+    } while (op < ri || op > rf); //Valida que este dentro de los rangos
+
+    return op;
 }
