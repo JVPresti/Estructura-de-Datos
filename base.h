@@ -6,7 +6,8 @@
 #include <string.h>
 #include <conio.h>
 
-typedef struct Alum{
+typedef struct Alum
+{
     char name[20];
     char especie[20];
     int edad;
@@ -40,23 +41,26 @@ int validar(char msg[], int ri, int rf);
 // Esta funcion crea un nodo con los datos de una mascota y lo retorna
 Nodo *crearNodo(Talum *alum)
 {
-    char cadena[50];
-    Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));  // Reservar memoria para el nodo
-    
-    fflush(stdin);
-    gets(cadena);
-    strncpy(nuevo->alum.name, cadena, sizeof(cadena)); // Copiar el nombre
+    Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo)); // Reservar memoria para el nodo
+
+    if (nuevo == NULL)
+    {
+        printf("Error: No se pudo asignar memoria para el nuevo nodo\n");
+        return NULL;
+    }
+
+    printf("Ingrese el nombre de la mascota: ");
+    fgets(nuevo->alum.name, sizeof(nuevo->alum.name), stdin);
+    nuevo->alum.name[strcspn(nuevo->alum.name, "\n")] = '\0'; // Eliminar el carácter de nueva línea
 
     printf("Ingrese la especie de la mascota: ");
-    fflush(stdin);
-    gets(cadena);
-    strncpy(nuevo->alum.especie, cadena, sizeof(cadena));
-    
-    printf("Ingrese el sexo de la mascota: "); 
-    fflush(stdin);
-    gets(cadena);
-    strncpy(nuevo->alum.sexo , cadena, sizeof(cadena)); 
-    
+    fgets(nuevo->alum.especie, sizeof(nuevo->alum.especie), stdin);
+    nuevo->alum.especie[strcspn(nuevo->alum.especie, "\n")] = '\0';
+
+    printf("Ingrese el sexo de la mascota: ");
+    fgets(nuevo->alum.sexo, sizeof(nuevo->alum.sexo), stdin);
+    nuevo->alum.sexo[strcspn(nuevo->alum.sexo, "\n")] = '\0';
+
     nuevo->alum.edad = validar("Ingrese la edad de la mascota: ", 0, 100);
     nuevo->sig = NULL; // El nodo apunta a NULL
     return nuevo;
@@ -72,10 +76,7 @@ void destruirNodo(Nodo *nodo)
 void insertarPrincipio(Lista *lista, Talum *alum)
 {
     Nodo *nuevo = crearNodo(alum);
-    printf("%s", nuevo->alum.name);
-    printf("%s", nuevo->alum.especie); //! ESTOY PROBANDO ESTO
-    printf("%d", nuevo->alum.edad);     //! EL ERROR ES QUE NO PUEDE BUSCAR
-    printf("%s", nuevo->alum.sexo);
+
     nuevo->sig = lista->ini; // El nuevo nodo apunta al inicio
     lista->ini = nuevo;      // El inicio de la lista es el nuevo nodo
     lista->longi++;          // Aumentar la longitud de la lista
@@ -105,21 +106,23 @@ void insertarFinal(Lista *lista, Talum *alum)
 void insertarMedio(int n, Lista *lista, Talum *alum)
 {
     Nodo *nuevo = crearNodo(alum);
-    if (lista->ini == NULL) // Si la lista esta vacia
-    {
+
+    if (lista->ini == NULL || n <= 0)
+    { // Si la lista está vacía o n es 0 o menor
+        nuevo->sig = lista->ini;
         lista->ini = nuevo;
     }
     else
     {
-        Nodo *ptr = lista->ini; // Apuntador al inicio
+        Nodo *ptr = lista->ini;
         int posi = 0;
-        while (posi < n && ptr->sig) // Mientras el apuntador al siguiente nodo no sea NULL
-        {
-            ptr = ptr->sig; // Avanzar al siguiente nodo
+        while (posi < n - 1 && ptr->sig != NULL)
+        { // Avanzar hasta la posición (n - 1) o el final de la lista
+            ptr = ptr->sig;
             posi++;
         }
-        nuevo->sig = ptr->sig; // El nuevo nodo apunta al siguiente nodo
-        ptr->sig = nuevo;      // El ultimo nodo apunta al nuevo nodo
+        nuevo->sig = ptr->sig; // El nuevo nodo apunta al siguiente nodo de ptr
+        ptr->sig = nuevo;      // El nodo ptr apunta al nuevo nodo
     }
     lista->longi++;
 }
@@ -235,8 +238,8 @@ int validar(char msg[], int ri, int rf)
         printf("%s", msg);
         fflush(stdin);
         gets(cadena);
-        op = atoi(cadena); //Convierte la cadena a un numero
-    } while (op < ri || op > rf); //Valida que este dentro de los rangos
+        op = atoi(cadena);        // Convierte la cadena a un numero
+    } while (op < ri || op > rf); // Valida que este dentro de los rangos
 
     return op;
 }
