@@ -1,5 +1,5 @@
 // Jorge Vazquez
-// Last update: 2024-05-02
+// Last update: 2024-21-02
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,9 +34,10 @@ void insertarMedio(int n, Lista *lista, Talum *alum);
 Talum *buscar(int n, Lista *lista);
 int contar(Lista *lista);
 void eliminarInicio(Lista *lista);
-void elimnarUltimo(Lista *lista);
-void elimnarElementos(int n, Lista *lista);
+void eliminarUltimo(Lista *lista);
+void eliminarElementos(int n, Lista *lista);
 int validar(char msg[], int ri, int rf);
+void imprimirLista(Lista *lista);
 
 // Esta funcion crea un nodo con los datos de una mascota y lo retorna
 Nodo *crearNodo(Talum *alum)
@@ -173,7 +174,7 @@ void eliminarInicio(Lista *lista)
 }
 
 // Esta funcion elimina el nodo al final de la lista
-void elimnarUltimo(Lista *lista)
+void eliminarUltimo(Lista *lista)
 {
     if (lista->ini) // Si la lista no esta vacia
     {
@@ -200,7 +201,7 @@ void elimnarUltimo(Lista *lista)
 }
 
 // Esta funcion elimina el nodo en la posicion n de la lista
-void elimnarElementos(int n, Lista *lista)
+void eliminarElementos(int n, Lista *lista)
 {
     if (lista->ini)
     {
@@ -228,6 +229,30 @@ void elimnarElementos(int n, Lista *lista)
     }
 }
 
+// Esta funcion imprime la lista
+void imprimirLista(Lista *lista)
+{
+    if (lista->ini == NULL)
+    {
+        printf("La lista esta vacia\n");
+    }
+    else
+    {
+        Nodo *ptr = lista->ini;
+        int posi = 0;
+        while (ptr)
+        {
+            printf("Mascota %d\n", posi + 1);
+            printf("Nombre: %s\n", ptr->alum.name);
+            printf("Especie: %s\n", ptr->alum.especie);
+            printf("Sexo: %s\n", ptr->alum.sexo);
+            printf("Edad: %d\n", ptr->alum.edad);
+            printf("\n");
+            ptr = ptr->sig;
+            posi++;
+        }
+    }
+}
 int validar(char msg[], int ri, int rf)
 {
     char cadena[50];
