@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct nodo{
     int dato;
@@ -107,3 +108,4 @@ void imprimirArbol(struct nodo *arbol, int nivel){
     imprimirArbol(arbol->der, nivel + 1);
 }
 */
+
