@@ -91,6 +91,19 @@ bool esLleno(struct nodo *arbol){
     return false; //Retona falso si no tiene dos hijos o sea que no es lleno
 }
 
+//Codigo para saber si un arbol esta balanceado o no
+bool esBalenceado(struct nodo *arbol){
+    if(arbol == NULL)
+        return true;
+    int alturaIzq = altura(arbol->izq);
+    int alturaDer = altura(arbol->der);
+    if(abs(alturaIzq - alturaDer) <= 1)
+        return esBalenceado(arbol->izq) && esBalenceado(arbol->der);
+
+    return false;
+}
+
+
 int main(){
 
     int datos[9]= {8, 3, 1, 20, 5, 10, 7, 4, 7};
@@ -101,7 +114,7 @@ int main(){
         insertar(arbol, datos[i]);
     }
 
-    printf("La altura del arbol es %d\n", altura(arbol));
+    /*printf("La altura del arbol es %d\n", altura(arbol));
 
     printf("El numero de hojas del arbol es %d\n", contarHojas(arbol));
 
@@ -110,9 +123,15 @@ int main(){
     printf(lleno ? "lleno\n" : "no lleno\n");
 
 
+    //imprimirArbol(arbol, 0);*/
     printf("El arbol es ");
     bool completo = esCompleto(arbol);
     printf(completo ? "completo\n" : "incompleto\n");
-    //imprimirArbol(arbol, 0);
+
+    printf("El aeblol es ");
+    bool balanceado = esBalenceado(arbol);
+    printf(balanceado ? "balanceado\n" : "no balanceado\n");
+
+
     return 0;
 }
