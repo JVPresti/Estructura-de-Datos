@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+#include <math.h>
 
 typedef struct exprNode {
     char operator;           
@@ -56,6 +56,10 @@ int evaluate(exprNode* root) {
             return leftVal * rightVal;
         case '/':
             return leftVal / rightVal;
+        case '^':
+            return pow(leftVal, rightVal); 
+        case '%':
+            return leftVal % rightVal;
         default:
             return 0; 
     }
