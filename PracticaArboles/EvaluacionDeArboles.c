@@ -78,9 +78,9 @@ void freeTree(exprNode* root) {
 int main() {
     // (3 + 5) * (2 - 1)
     int n1 = 3, n2 = 5, n3 = 2, n4 = 1;
-    exprNode* left = createOperatorNode('+', createOperandNode(n1), createOperandNode(n2));
-    exprNode* right = createOperatorNode('-', createOperandNode(n3), createOperandNode(n4));
-    exprNode* root = createOperatorNode('*', left, right);
+    exprNode* left = createOperatorNode('+', createOperandNode(n1), createOperandNode(n2)); //Primer parentesis
+    exprNode* right = createOperatorNode('-', createOperandNode(n3), createOperandNode(n4)); //Segundo parentesis
+    exprNode* root = createOperatorNode('*', left, right); // Evaluacion final
 
     int result = evaluate(root);
     printf("Resultado: %d\n", result);
