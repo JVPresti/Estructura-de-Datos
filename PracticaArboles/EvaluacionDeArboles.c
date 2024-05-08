@@ -73,7 +73,7 @@ void freeTree(exprNode* root) {
 }
 
 int main() {
-    // 5 * 6 - 4 + 8 * 3 * ^ (4 - 2) * √3
+    // 5 * 6 - 4 + 8 * 3 ^ (4 - 2) * √3
     
     exprNode* root = createOperatorNode('+', createOperatorNode('-', createOperatorNode('*', createOperandNode(5), createOperandNode(6)), createOperandNode(4)), 
         createOperatorNode('*', createOperatorNode('*', createOperandNode(8),createOperatorNode('^', createOperandNode(3), createOperandNode(2))),  // ^(4 - 2)) 
