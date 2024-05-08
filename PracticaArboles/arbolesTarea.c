@@ -103,11 +103,50 @@ bool esBalenceado(struct nodo *arbol){
     return false;
 }
 
+//Funcion para borrar un nodo de un arbol
+struct nodo *borrar(struct nodo *arbol, int dato){
+    if(arbol == NULL){
+        return arbol;
+    }
+    if(dato < arbol->dato){
+        arbol->izq = borrar(arbol->izq, dato); //Esto verifica que el nodo a borrar no esta del otro lado
+    }
+    else if(dato > arbol->dato){
+        arbol->der = borrar(arbol->der, dato);
+    }
+    else{
+        if(arbol->izq == NULL){
+            struct nodo *temp = arbol->der; //Variable para guardar el nodo a borrar
+            free(arbol); 
+            return temp;
+        }
+        else if(arbol->der == NULL){
+            struct nodo *temp = arbol->izq;
+            free(arbol);
+            return temp;
+        }
+        struct nodo *temp = arbol->der;
+        while(temp->izq != NULL){
+            temp = temp->izq;
+        }
+        arbol->dato = temp->dato;
+        arbol->der = borrar(arbol->der, temp->dato);
+    }
+    return arbol;
+}
+
+//Funcion para buscar el nodo menor de un arbol
+struct nodo *buscarMenor(struct nodo *arbol){
+    while(arbol->izq != NULL){
+        arbol = arbol->izq;
+    }
+    return arbol;
+}
 
 int main(){
 
     int datos[9]= {8, 3, 1, 20, 5, 10, 7, 4, 7};
-    int n=9;
+    int n=9, bor;
     struct nodo *arbol = crearNodo(datos[0]);
 
     for(int i=1; i<n; i++){
@@ -123,7 +162,7 @@ int main(){
     printf(lleno ? "lleno\n" : "no lleno\n");
 
 
-    //imprimirArbol(arbol, 0);*/
+    //imprimirArbol(arbol, 0);
     printf("El arbol es ");
     bool completo = esCompleto(arbol);
     printf(completo ? "completo\n" : "incompleto\n");
@@ -131,7 +170,27 @@ int main(){
     printf("El aeblol es ");
     bool balanceado = esBalenceado(arbol);
     printf(balanceado ? "balanceado\n" : "no balanceado\n");
+    */
 
+    printf("El contenido del arbol es ");
+    for(int i=0; i<n; i++){
+        printf("%d ", datos[i]);
+    }
+    printf("\n");
+    printf("Ingresa el nodo a borrar: ");
+    scanf("%d", &bor);
+    arbol = borrar(arbol, bor);
+    printf("El contenido del arbol despues de borrar el nodo %d es ", bor);
+    for(int i=0; i<n; i++){
+        if(datos[i] != bor){
+            printf("%d ", datos[i]);
+        }
+    }
+    printf("\n");
+
+    printf("El nodo menor del arbol es: ");
+    struct nodo *menor = buscarMenor(arbol);
+    printf("%d\n", menor->dato);
 
     return 0;
 }
