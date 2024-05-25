@@ -39,6 +39,8 @@ void eliminarElementos(int n, Lista *lista);
 int validar(char msg[], int ri, int rf);
 void imprimirLista(Lista *lista);
 void estadoPila(Lista *lista);
+void sizePila(Lista *lista);
+void vaciarPila(Lista *lista);
 
 // Esta funcion crea un nodo con los datos de una mascota y lo retorna
 Nodo *crearNodo(Talum *alum)
@@ -264,7 +266,7 @@ int validar(char msg[], int ri, int rf)
         printf("%s", msg);
         fflush(stdin);
         gets(cadena);
-        op = atoi(cadena);        // Convierte la cadena a un numero
+        op = atoi(cadena); // Convierte la cadena a un numero
     } while (op < ri || op > rf); // Valida que este dentro de los rangos
 
     return op;
@@ -280,5 +282,20 @@ void estadoPila(Lista *lista)
     else
     {
         printf("La pila tiene %d elementos\n", lista->longi);
+    }
+}
+
+// Esta funcion imprime el tamaño de la pila
+void sizePila(Lista *lista)
+{
+    printf("La pila tiene %d elementos\n", lista->longi);
+}
+
+// Esta funcion vacia la pila
+void vaciarPila(Lista *lista)
+{
+    while (lista->ini)
+    {
+        eliminarInicio(lista);
     }
 }

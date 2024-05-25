@@ -27,9 +27,11 @@ void menu()
         printf("2. Pop\n");
         printf("3. Imprimir pila\n");
         printf("4. Estado de la pila\n");
-        printf("5. Salir\n");
+        printf("5. Tamaño de la pila\n");
+        printf("6. Vaciar la pila\n");
+        printf("7. Salir\n");
         fflush(stdin);
-        op = validar("Seleccione una opcion: ", 1, 5);
+        op = validar("Seleccione una opcion: ", 1, 7);
         switch (op)
         {
         case 1:
@@ -43,7 +45,7 @@ void menu()
             system("pause");
             break;
         case 3:
-            printf("Imprimir lista\n");
+            printf("Imprimir Pila\n");
             imprimirLista(lista);
             system("pause");
             break;
@@ -53,9 +55,19 @@ void menu()
             system("pause");
             break;
         case 5:
-            printf("Adios...\n");
+            printf("Tamano de la pila\n");
+            sizePila(lista);
+            system("pause");
+            break;
+        case 6:
+            printf("Vaciar la pila\n");
+            vaciarPila(lista);
+            system("pause");
+            break;
+        case 7:
+            printf("Adios....\n");
             break;
         }
-    } while (op != 5);
+    } while (op != 7);
     free(lista);
 }
