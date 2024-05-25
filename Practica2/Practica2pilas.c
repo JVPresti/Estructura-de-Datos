@@ -17,7 +17,7 @@ void menu()
     Lista *lista = (Lista *)malloc(sizeof(Lista));
     lista->ini = NULL;
     lista->longi = 0;
-    Talum *alum, *busca;
+    Talum *alum;
     // lista->ini = NULL;
     do
     {
